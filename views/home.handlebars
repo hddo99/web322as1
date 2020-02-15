@@ -1,0 +1,58 @@
+<a href="#"><h2 class= "banner_title">Try Prime</h2></a>
+
+
+    <div class="slideshow-container">
+		<div class="mySlides fade">
+  			<a href="#"><img src="img/i1.jpg" ></a>
+		</div>
+
+		<div class="mySlides fade">
+  			<a href="#"><img src="img/i2.jpg" ></a>
+		</div>
+
+		<div class="mySlides fade">
+ 			 <a href="#"><img src="img/i3.jpg" ></a>
+		</div>
+
+		<div class="mySlides fade">
+  			<a href="#"><img src="img/i5.png" ></a>
+		</div>
+	</div>
+<br>
+<script>showSlides();</script>
+
+<div class="container_category">
+	{{#each category_list}}
+		<div class="box">
+            <h3 class="productTitle">{{this.title}}</h3>
+			<div class="imgBox">
+				<a href="{{this.url}}"><img src="{{this.img_src}}"></a>
+			</div>
+				<div class="content">
+                    <a href="{{this.url}}">
+                       <p>{{this.details}}</p>
+                    </a>		
+				</div>
+		</div>	
+		{{/each}} 
+</div>
+
+<h2 id="best_sell_heading">Best Sellers</h2>
+
+<div class="row">
+	{{#each best_Sells}}
+    <div class="column">
+		<div class="img_demo">
+ 			<a href="#"><img class="demo cursor" src="{{this.img}}" style="width:100%" onclick="currentSlide({{@index}})"></a>
+		</div>
+		<div class="caption-container">
+    		<p id="caption">{{this.title}}</p>
+		</div>
+    </div>
+	
+	{{/each}} 
+</div>
+<script>
+	showSlides_b(slideIndex);
+</script>
+
