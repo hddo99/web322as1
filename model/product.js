@@ -7,10 +7,10 @@ const products =
     init()
     {
         // Category Product List
-        this.category.push({title:"Valentine's Day Presents",img_src:'img/val.jpg',url:'/', details:'Learn More'});
-        this.category.push({title:"Tools for daily life",img_src:'img/tool.jpg',url:'/',  details:'See details'});
-        this.category.push({title:"Nutritional products",img_src:'img/fit.jpg',url:'/',  details:'Learn More'});
-        this.category.push({title:"Cell Phones ands Accessories",img_src:'img/phone.jpg',url:'/',  details:'Shop now'});
+        this.category.push({title:"Valentine's Day",img_src:'img/val.jpg',url:'/', details:'Learn More'});
+        this.category.push({title:"Tools",img_src:'img/tool.jpg',url:'/',  details:'See details'});
+        this.category.push({title:"Nutrition Products",img_src:'img/fit.jpg',url:'/',  details:'Learn More'});
+        this.category.push({title:"Cell Phones",img_src:'img/phone.jpg',url:'/',  details:'Shop now'});
 
         // Products
         this.products.push({title:'Magic Coffee Mugs',category:"Gifts for You",description:'Create a mesmerizing custom-printed magic photo mug with just a few clicks. You can directly design a magic mug online with us and get it gift-wrapped.',price:'C$16.99',img:'img/pro1.jpg',bestSeller: true});

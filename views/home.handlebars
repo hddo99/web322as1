@@ -1,5 +1,6 @@
-<a href="#"><h2 class= "banner_title">Try Prime</h2></a>
-
+<div class="banner-wrapper banner-wrapper-prime">
+	<a href="#" ><h2 class= "banner_title">Try Prime</h2></a>
+</div>
 
     <div class="slideshow-container">
 		<div class="mySlides fade">
@@ -18,35 +19,31 @@
   			<a href="#"><img src="img/i5.png" ></a>
 		</div>
 	</div>
-<br>
 <script>showSlides();</script>
-
-<div class="container_category">
+<div class="banner-wrapper banner-wrapper-product">
+	<h3 class= "banner-title-product">Product Category</h3>
+</div>
+<div class="category_container">
 	{{#each category_list}}
 		<div class="box">
-            <h3 class="productTitle">{{this.title}}</h3>
-			<div class="imgBox">
-				<a href="{{this.url}}"><img src="{{this.img_src}}"></a>
-			</div>
-				<div class="content">
-                    <a href="{{this.url}}">
-                       <p>{{this.details}}</p>
-                    </a>		
-				</div>
+            <h4 class="productTitle">{{this.title}}</h4>
+			<a href="{{this.url}}"><img src="{{this.img_src}}"></a>
+			<a href="{{this.url}}">
+                <p>{{this.details}}</p>
+            </a>		
 		</div>	
-		{{/each}} 
+	{{/each}} 
 </div>
 
-<h2 id="best_sell_heading">Best Sellers</h2>
+<div class="banner-wrapper banner-wrapper-product">
+	<h3 class= "banner-title-product">Best Sellers</h3>
+</div>
 
-<div class="row">
+<div class="bestSelle-wrapper">
 	{{#each best_Sells}}
-    <div class="column">
+    <div class="bestSeller-box">
 		<div class="img_demo">
- 			<a href="#"><img class="demo cursor" src="{{this.img}}" style="width:100%" onclick="currentSlide({{@index}})"></a>
-		</div>
-		<div class="caption-container">
-    		<p id="caption">{{this.title}}</p>
+ 			<a href="#"><img class="demo cursor" src="{{this.img}}" style="width:100%" onclick="currentSlide({{@index}})">{{this.title}}</a>
 		</div>
     </div>
 	
@@ -55,4 +52,3 @@
 <script>
 	showSlides_b(slideIndex);
 </script>
-

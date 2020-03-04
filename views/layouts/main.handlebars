@@ -8,92 +8,113 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/yourcode.js"></script>
     <script type="text/javascript" src="sources.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
 </head>
 <body>
-    
         <header>
-            <div id="nav_upper">
-                <div class="nav_left">
-                    {{{labelMenu}}}
-                    <div id="menu_bar">
-                        <header><a href="/login"><i class="fa fa-user-circle"></i>Your account</a></header>
-                        <ul>
-                            <li><a href="#"><i class="fa fa-qrcode"></i>Best Sellers</a></li>
-                            <li><a href="#"><i class="fa fa-truck"></i>Delivery</a></li>
-                            <li><a href="/product"><i class="fa fa-shopping-basket"></i>Products</a></li>
-                            <li><a href="#"><i class="fa fa-gift"></i>Promotion</a></li>
-                            <li><a href="#"><i class="fa fa-sliders"></i>Services</a></li> 
-                            <li><a href="#"><i class="fa fa-question-circle"></i>Help</a></li>	
-                            <li><a href="#"><i class="fa fa-envelope"></i>Contact</a></li>
-                        </ul>
-                    </div>
+            <div class="navBar">
+                <div id="nav_upper">
+                    <div class="nav_left">
+                        {{{labelMenu}}}
+                        <div id="menu_bar">
+                            <header><a href="/login"><i class="fa fa-user-circle"></i>Your account</a></header>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-qrcode"></i>Best Sellers</a></li>
+                                <li><a href="#"><i class="fa fa-truck"></i>Delivery</a></li>
+                                <li><a href="/product"><i class="fa fa-shopping-basket"></i>Products</a></li>
+                                <li><a href="#"><i class="fa fa-gift"></i>Promotion</a></li>
+                                <li><a href="#"><i class="fa fa-sliders"></i>Services</a></li> 
+                                <li><a href="#"><i class="fa fa-question-circle"></i>Help</a></li>	
+                                <li><a href="#"><i class="fa fa-envelope"></i>Contact</a></li>
+                            </ul>
+                        </div>
                     
-                   
-                </div>
-            </div>
-             <div id="nav-logo">
-                        <a href="/" class="logo-links" aria-label="Amazon.ca">
-                            <img src="img/amazonLogo.png" alt="logo amazon">
-                        </a>
-                        
-            </div>
-            
-            <div class="navigationBar">
-                <div class="search-container">
-                    <form action="/action_page.php">
-                        <input type="text" maxlength="100" placeholder="Search.." name="search" size="100">
-                    <button type="submit"><i class="fa fa-search" style="color:black"></i></button>
-                    </form>
-                </div>
-                <nav>
-                    <ul>
-                        <li class="navigationBar_Element">        
-                            <a href="/" title="Home">
-                                <span>Home</span>
-                            </a>  
-                        </li>
-                        <li class="navigationBar_Element"> 
-                            <a href="/cus_regis" title="Sign up">
-                                
-                                <span>Register</span>
+                        <div id="nav-logo">
+                            <a href="/" class="logo-links" aria-label="Amazon.ca">
+                                <img src="img/amazonLogo.png" alt="logo amazon">
                             </a>
-                        </li>
-                        <li class="navigationBar_Element">
-                            <a href="/login" title="Sign in">
-                                
-                                <span>Login</span>
+                        </div>
+                        <div class="nav-upperleft-right">
+                            <a href="/product">
+                                <i class="fa fa-shopping-cart" style="font-size:36px;color:rgb(207, 223, 221)"></i>
                             </a>
-                        </li>
-                        <li class="navigationBar_Element">
-                            <a href="/product" title="Cart">
-                                
-                                <span>Products</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                
+                        </div>
+                    </div>
+                    <hr noshade>
+                    <div class="search-nav-wrapper">
+                            <form action="/action_page.php">
+                                <input type="text"  placeholder="Search for items..." name="search">
+                                <button type="submit"><i class="fa fa-search" style="color:black"></i></button>
+                            </form>
+                    </div>
+                    <hr noshade>
+                    <div class="nav_right">
+                        <nav>
+                            <ul>
+                                <li class="navigationBar_Element">        
+                                    <a href="/" title="Home">
+                                        Home
+                                    </a>  
+                                </li>
+                                <li class="navigationBar_Element"> 
+                                    <a href="/cus_regis" title="Sign up">
+                                        Register
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <a href="/login" title="Sign in">
+                                        Login
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <a href="/product" title="Cart">
+                                       Products
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <a href="/product" title="Cart">
+                                       Hot Deals
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <a href="/product" title="Cart">
+                                       Video
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <a href="/product" title="Cart">
+                                       Music
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <a href="/product" title="Cart">
+                                       Books
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    {{{daily_promo}}} 
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
             </div>
-            {{{daily_promo}}}
+            </div> 
         </header>
         <main>
-            <section>
+            <section class="main-wrapper">
                 {{{body}}}
             </section>
-            
-            
         </main>
         <div class="toTop">
             <a href="#top">
                 <i class="fa fa-angle-double-up" style="font-size:24px"></i>
             </a>
         </div>
-
-
         <footer>
-                <div class="nav_footer_above">
-                    <div class="nav_footer_sec">
+            <div class="nav_footer_above">
+                    <div class="nav_footer_sec nav_footer_sec1">
                         <div class="navFooterColHead">Get to Know Us</div>
                         <ul>
                             <li class="nav_first"><a href="https://www.amazon.jobs" class="nav_a">Careers</a></li>
@@ -102,7 +123,7 @@
                             <li class="nav_last"><a href="https://www.amazon.ca/pr" class="nav_a">Press Releases</a></li>
                         </ul>
                     </div>
-                    <div class="nav_footer_sec">
+                    <div class="nav_footer_sec nav_footer_sec2">
                         <div class="navFooterColHead">Make Money with Us</div>
                         <ul>
                             <li class="nav_first"><a href="/" class="nav_a">Sell on Amazon</a></li>
@@ -113,7 +134,7 @@
                             <li class="nav_last"><a href="https://kdp.amazon.com?language=en_US" class="nav_a">Independently Publish with Us</a></li>
                         </ul>
                     </div>                 
-                    <div class="nav_footer_sec">
+                    <div class="nav_footer_sec nav_footer_sec3">
                         <div class="navFooterColHead">Let Us Help You</div>
                         <ul>
                             <li class="nav_first"><a href="/" class="nav_a">Shipping Rates &amp; Policies</a></li>
@@ -122,14 +143,16 @@
                             <li class="nav_last"><a href="/" class="nav_a">Customer Service</a></li>
                         </ul>
                     </div>
-                </div>
+            </div>
             <div class="nav_footer_me">
                 <ul>
-                    <li class="nav_first"><a href="/" class="nav_a">Conditions of Use</a></li>
-                    <li><a href="/" class="nav_a">Privacy Notice</a></li>
-                    <li class="nav_last"><a href="/" class="nav_a">Interest-Based Ads</a></li>
+                    <li class="link-footer link-footer1"><a href="/login" class="sign_in_link">Already have an account? Sign in</a></li>
+                    <li class="link-footer link-footer2"><a href=/>Conditions of Use</a></li>
+                    <li class="link-footer link-footer3"><a href="/">Privacy Notice</a></li>
+                    <li class="link-footer link-footer4"><a href="/">Interest-Based Ads</a></li>
+                    <li class="link-footer link-footer5">@HUU DUY DO, Web_Assignment_1</li>
                 </ul>
-                <span style="text-align:center"> @HUU DUY DO, Web_Assignment_1</span>
+
             </div>
         </footer>     
 </body>
