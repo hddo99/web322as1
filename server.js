@@ -83,8 +83,10 @@ app.post("/cus_regis",(req,res)=>{
         } 
   }
 //phone no Validation with regex
+
+//This expression matches a hyphen separated US phone number, of the form ANN-NNN-NNNN, where A is between 2 and 9 and N is between 0 and 9.
 function phoneNo_Validate(str) {
-    const pattern = new RegExp(/^\+?1?\s*?\(?\d{3}(?:\)|[-|\s])?\s*?\d{3}[-|\s]?\d{4}$/);
+    const pattern = new RegExp(/^[2-9]\d{2}-\d{3}-\d{4}$/);
     return pattern.test(str);
 }
 
@@ -112,14 +114,30 @@ function password_Validate(str) {
     }
     else
     {
-        res.render('general/contactus',{
-            title:"Contact Us",
-            css:"../css/style.css",
-            message:"Congratulations !"
-        });
 
-       
-    
+             const {yourname, ap_email} = req.body;
+          const sgMail = require('@sendgrid/mail');
+          sgMail.setApiKey();
+          const msg = {
+              to:`${ap_email}`,
+              from: `registration@wishtree.com`,
+              subject: 'Registration Submit',
+              html: `
+              Hi ${yourname},<br><br>
+              <strong>You have signed up succesfully</strong>`,
+            };
+      sgMail.send(msg)
+          .then(()=>{
+            res.render('/home',{
+              title:"Home",
+              category_list: productModel.getCategory_list(),
+              best_Sells: productModel.getBestseller_list(),
+              welcome_message:`Welcome ${yourname}!`
+          });
+          })
+          .catch(err=>{
+              console.log(`Error ${err}`);
+          });
     }
 })
 
