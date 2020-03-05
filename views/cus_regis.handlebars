@@ -1,23 +1,33 @@
 <div align="center" class="form_container">
       <div class="sign-box">
-        <form name="signIn" id="sign_form" method="POST" action="#">
+        <form name="signIn"  method="POST" action="/cus_regis">
           <h1 class="a-spacing-small"> Create account</h1>
+          <br>
           <label for="yourname" class="a-form-label">Your name</label>
           <br>
-          <input type = "email" maxlength="128" id="yourname" name="name" required>
+          <input type = "text" maxlength="128" id="yourname" name="yourname" value="{{yourname}}">
+          <div class="error">{{e_Name}}</div>
           <br>
           <label for="ap_email" class="a-form-label">E-mail address or mobile phone number</label>
           <br>
-          <input type = "email" maxlength="128" id="ap_email" name="email" required>
+          <input type = "email" maxlength="128" id="ap_email" name="ap_email" value="{{ap_email}}">
+          <div class="error">{{e_Email}}</div>
           <br>
           <label for="passWord" class="a-form-label">Password</label>
           <br>
-          <input type = "password" maxlength="16" id="passWord" name= "password" required placeholder="At least 6 characters">
+          <input type = "password" maxlength="16" id="passWord" name= "passWord" placeholder="At least 6 characters" value="{{passWord}}">
           <div class="aler_container"><i class="fa fa-warning"></i> Passwords must consist of at least 6 characters.</div>
+          <div class="error">{{e_Password}}</div>
           <br>
           <label for="passWord_again" class="a-form-label">Password again</label>
           <br>
-          <input type = "password" maxlength="16" id="passWord_again" name= "password_again" required>
+          <input type = "password" maxlength="16" id="passWord_again" name= "passWord_again" value="{{passWord_again}}">
+          <div class="error">{{e1_Password}}</div>
+          <br>
+          <label for="user_phone" class="a-form-label">Phone</label>
+          <br>
+          <input type = "text" maxlength="16" id="user_phone" name= "user_phone" value="{{user_phone}}">
+          <div class="error">{{e_Phone}}</div>
           <div id="legalTextRow" class="a-row a-spacing-top-medium a-size-small">
             By continuing, you agree to Amazon's <a href="#" style="color: blue;">Conditions of Use</a> and <a href="https://www.amazon.ca/gp/help/customer/display.html/ref=ap_register_notification_privacy_notice?ie=UTF8&nodeId=918814" style="color: blue;">Privacy Notice</a>.
           </div>

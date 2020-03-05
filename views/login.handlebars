@@ -1,12 +1,18 @@
 <div align="center" class="form_container">
       <div class="sign-box">
-        <form name="signIn" id="sign_form" method="POST" action="#">
+        <form name="signIn" method="POST" action="/login">
           <h1 class="a-spacing-small" id="signin_title">Sign-In</h1>
+          <br>
           <label for="ap_email" class="a-form-label">E-mail address or mobile phone number</label>
           <br>
-          <input type = "email" maxlength="128" id="ap_email" name= email required>
+          <input type = "email" id="ap_email" name= "ap_email" maxlength="100" size="45" value="{{ap_email}}">
+          <div class="error">{{e_Email}}</div>
           <br>
-          <input type = "password" maxlength="16" id="passWord" name= password required>
+
+          <label for="user_password" class="a-form-label">Enter password</label>
+          <br>
+          <input type = "password" maxlength="16" id="user_password" name="user_password" value="{{user_password}}">
+          <div class="error">{{e_Password}}</div>
           <div id="condition" class="condition_regulation">
             By continuing, you agree to Amazon's <a href="#" style="color: blue;">Privacy Notice</a>.
           </div>
