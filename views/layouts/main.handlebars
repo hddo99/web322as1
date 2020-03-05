@@ -14,9 +14,13 @@
 <body>
         <header>
             <div class="navBar">
-                <div id="nav_upper">
+                <div class="nav_wrapper">
                     <div class="nav_left">
-                        {{{labelMenu}}}
+                        <input type="checkbox" id="check">
+                        <label  for="check">
+                            <i class="fa fa-bars" id="open" style="font-size:18px"></i>    
+                            <i class="fa fa-times" id="cancel"              style="font-size:18px"></i> 
+                        </label>
                         <div id="menu_bar">
                             <header><a href="/login"><i class="fa fa-user-circle"></i>Your account</a></header>
                             <ul>
@@ -36,19 +40,30 @@
                             </a>
                         </div>
                         <div class="nav-upperleft-right">
-                            <a href="/product">
-                                <i class="fa fa-shopping-cart" style="font-size:36px;color:rgb(207, 223, 221)"></i>
-                            </a>
+                            <ul>
+                                <li><a href="/"><span>About us</span></a>
+                                </li>
+                                <li> <a href="/"><span>Order&amp;Delivery</span></a>
+                                </li>
+                                <li>
+                                    <a href="/product">
+                                        <i class="fa fa-shopping-cart" style="font-size:36px;color:rgb(207, 223, 221)"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            
                         </div>
                     </div>
-                    <hr noshade>
+                    
                     <div class="search-nav-wrapper">
+                        <hr noshade>
                             <form action="/action_page.php">
                                 <input type="text"  placeholder="Search for items..." name="search">
                                 <button type="submit"><i class="fa fa-search" style="color:black"></i></button>
                             </form>
+                             <hr noshade>
                     </div>
-                    <hr noshade>
+                   
                     <div class="nav_right">
                         <nav>
                             <ul>
@@ -93,19 +108,28 @@
                                     </a>
                                 </li>
                                 <li class="navigationBar_Element">
-                                    {{{daily_promo}}} 
+                                    <a href="/product" title="Cart">
+                                       Tech
+                                    </a>
+                                </li>
+                                <li class="navigationBar_Element">
+                                    <div class="daily-deals">
+                                        <a href="#" > 
+                                            <h2><i class="fa fa-gift" style="font-size:24px"></i>                               Today's Deals</h2>
+                                        </a>
+                                   <div>                             
                                 </li>
                             </ul>
                         </nav>
                     </div>
 
+                </div>
             </div>
-            </div> 
+            
+             
         </header>
         <main>
-            <section class="main-wrapper">
-                {{{body}}}
-            </section>
+           {{{body}}}
         </main>
         <div class="toTop">
             <a href="#top">
@@ -131,7 +155,6 @@
                             <li><a href="https://associates.amazon.ca" class="nav_a">Amazon Associates</a></li>
                             <li><a href="/" class="nav_a">Sell on Amazon Handmade</a></li>
                             <li><a href="https://advertising.amazon.ca?ref_=a20m-hp-ft-ca" class="nav_a">Advertise Your Products</a></li>
-                            <li class="nav_last"><a href="https://kdp.amazon.com?language=en_US" class="nav_a">Independently Publish with Us</a></li>
                         </ul>
                     </div>                 
                     <div class="nav_footer_sec nav_footer_sec3">
@@ -141,6 +164,25 @@
                             <li><a href="/" class="nav_a">Amazon Prime</a></li><li><a href="/" class="nav_a">Returns Are Easy</a></li>
                             <li><a href="/" class="nav_a">Manage your Content and Devices</a></li>
                             <li class="nav_last"><a href="/" class="nav_a">Customer Service</a></li>
+                        </ul>
+                    </div>
+                    {{!-- <div class="nav_footer_sec nav_footer_sec4">
+                        <div class="navFooterColHead">Amazon Payment </div>
+                        <ul>
+                            <li class="nav_first"><a href="/" class="nav_a">Amazon.ca Rewards Mastercard</a></li>
+                            <li><a href="/" class="nav_a">Shop with Points</a></li>
+                            <li><a href="/" class="nav_a">Reload Your Balance</a></li>
+                            <li><a href="/" class="nav_a">Gift Cards</a></li>
+                            <li class="nav_last"><a href="/" class="nav_a">Amazon Cash</a></li>
+                        </ul>
+                    </div>   --}}
+                    <div class="nav_footer_sec nav_footer_sec4">
+                        <div class="navFooterColHead">Get to Know Us</div>
+                        <ul>
+                            <li class="nav_first"><a href="https://www.amazon.jobs" class="nav_a">Careers</a></li>
+                            <li><a href="/" class="nav_a">Amazon and Our Planet</a></li>
+                            <li><a href="https://www.amazon.ca/ir" class="nav_a">Investor Relations</a></li>
+                            <li class="nav_last"><a href="https://www.amazon.ca/pr" class="nav_a">Press Releases</a></li>
                         </ul>
                     </div>
             </div>

@@ -15,26 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 //Route for the Home Page
 app.get("/",(req,res)=>{
-    const label_menu = 
-    `
-    <input type="checkbox" id="check">
-        <label  for="check">
-            <i class="fa fa-bars" id="open" style="font-size:18px"></i>    
-            <i class="fa fa-times" id="cancel" style="font-size:18px"></i> 
-        </label>
-    `
-    const daily_deals = 
-    `
-    <div class="daily-deals">
-                <a href="#" > 
-                    <h2><i class="fa fa-gift" style="font-size:24px"></i> Today's Deals</h2>
-                </a>
-            </div>
-    `
+    
     res.render("home",{
         title:"Home",
-        labelMenu: label_menu,
-        daily_promo: daily_deals,
         category_list: productModel.getCategory_list(),
         best_Sells: productModel.getBestseller_list()
     });

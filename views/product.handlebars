@@ -1,6 +1,6 @@
 <h2 class= "banner_title" id = "bestSelling" style="color: cadetblue;">Shop by Category</h2>
     <div class="detail_product">
-      <div class ="detail_product_category" style="width: 300px;float: left;">
+      <div class ="product_category">
         <h3>ELECTRONICS</h3>
         <ul>
           <li class="sub_category"><a href="#">Accessories & Supplies</a></li>
@@ -21,22 +21,19 @@
         </ul>
       </div>
       
-      <div class="detail_product_list_items" style="float: left;width: auto;max-width: 1000px;">
-        <div class="grid-container_product_page" id="product_category">
-            {{#each products}}
-            <div class="grid-item listOf_items">  
-                <div>
-                    <a href="/"><img src="{{this.img}}" class="img_item"> </a>  
-                    <div class="product_content">
-                        <h4 class="title_item">{{this.title}}</h4>
-                        <p class="price_item">{{this.price}}</p>
-                        <p class="description_item">{{this.description}}</p>
-                    </div>
-                </div>
+      <div class="product-grid-wrapper">
+        {{#each products}}
+        <div class="grid-item-box">  
+            <a href="/"><img src="{{this.img}}" class="img_item"> </a>  
+            <div class="product_content">
+                <h4 class="title_item">{{this.title}}</h4>
+                <p class="price_item">{{this.price}}</p>
+                <p class="description_item">{{this.description}}</p>
             </div>
-            {{/each}}
         </div>
-      
+        {{/each}}
       </div>
     </div>
+  
+
   
