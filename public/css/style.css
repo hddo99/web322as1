@@ -868,3 +868,31 @@ border-radius: 6px
     width: 30%;
   }
 }
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(75, 20, 20, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+.overlay span {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  font-family: 'Trocchi', serif;
+  color: #818181;
+}
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 50px;
+  color: #818181;
+}

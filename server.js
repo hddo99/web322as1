@@ -2,6 +2,9 @@ const express = require("express");
 const app = express(); 
 const exphbs= require("express-handlebars");
 const productModel = require("./model/product");
+
+// load the env variable file
+require('dotenv').config({path:"./config/keys.env"}); 
 //This tells express to set up our template engine has handlebars
 app.engine("handlebars",exphbs());
 app.set("view engine", "handlebars");
@@ -56,7 +59,7 @@ app.post("/cus_regis",(req,res)=>{
         count++;
         errorMessage_password= "*Enter your Password !";
     }
-    if(req.body.passWord_again==""){
+    if(req.body.passWord_again == ""){
         count++;
         errorMessage_2ndpassword="*Re-enter your Password !";
     }
@@ -114,13 +117,19 @@ function password_Validate(str) {
     }
     else
     {
-
-             const {yourname, ap_email} = req.body;
-          const sgMail = require('@sendgrid/mail');
-          sgMail.setApiKey();
-          const msg = {
+        
+        const {yourname, ap_email} = req.body;
+        const ms = 
+        `
+        <div id="myNav" class="overlay" onclick="closeNav()">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <span>Hi ${yourname}. Let us please you</span>
+        </div>`;
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        const msg = {
               to:`${ap_email}`,
-              from: `registration@wishtree.com`,
+              from: `amazon.ca@cheap.com`,
               subject: 'Registration Submit',
               html: `
               Hi ${yourname},<br><br>
@@ -128,11 +137,11 @@ function password_Validate(str) {
             };
       sgMail.send(msg)
           .then(()=>{
-            res.render('/home',{
+            res.render('home',{
               title:"Home",
               category_list: productModel.getCategory_list(),
               best_Sells: productModel.getBestseller_list(),
-              welcome_message:`Welcome ${yourname}!`
+              welcome_message: ms
           });
           })
           .catch(err=>{
@@ -184,5 +193,5 @@ app.post("/login",(req,res)=>{
 const PORT= process.env.PORT || 3000;
 //This creates an Express Web Server that listens to HTTP Reuqest on port 3000
 app.listen(PORT,()=>{
-    console.log(`WeB Assignment 1 - Web Server Running`);
+    console.log(`WeB Assignment  - Web Server Running`);
 });
