@@ -578,6 +578,10 @@ div.nav_footer_sec ul li a{
   width: 100%;
   text-align: center;
 }
+.grid-item-box::-webkit-scrollbar
+{
+  display: none;
+}
 .img_item {
    height: 200px;
    width: 100%;
