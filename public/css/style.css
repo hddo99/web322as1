@@ -569,7 +569,7 @@ div.nav_footer_sec ul li a{
   height: 320px;
   width: 100%;
   box-shadow: 0 0 5px rgba(104,104,104,0.8);
-  overflow: auto;
+  overflow-y: scroll;
 }
 .product_content
 {
