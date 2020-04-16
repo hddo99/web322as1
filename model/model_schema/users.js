@@ -19,7 +19,7 @@ const userSchema = new Schema({
     },
     u_phone:
     {
-        type:Number,
+        type:String,
         required:true
     },
     u_isClerk:

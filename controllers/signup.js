@@ -4,17 +4,17 @@ const signupModel = require("../model/model_schema/users");
 const productModel = require("../model/product");
 // import bcrypt
 const bcrypt = require('bcryptjs');
-const saltRounds = 8;
+const saltRounds = 12;
 
 // signup route 
-router.get("/cus_regis",(req,res)=>{
+router.get("/",(req,res)=>{
     res.render("cus_regis",{
         title:"Registration",
     });
 });
 
 // validation form
-router.post("/cus_regis",(req,res)=>{
+router.post("/",(req,res)=>{
     const errorMessage_name=[];
     const errorMessage_email=[];
     const errorMessage_password=[];
@@ -77,7 +77,7 @@ function password_Validate(str) {
     }
     else
     {
-        const {yourname, ap_email} = req.body;
+        const {yourname, ap_email, user_phone} = req.body;
         const ms = 
         `
         <div id="myNav" class="overlay" onclick="closeNav()">
@@ -88,7 +88,7 @@ function password_Validate(str) {
         signupModel.findOne({ "u_email": req.body.ap_email })
         .then(database_email =>
             {
-                if (database_email != null) 
+                if (database_email) 
                 {
                     errorMessage_email.push('*Email already exists !');
                     res.render("cus_regis",{
@@ -104,7 +104,7 @@ function password_Validate(str) {
                 }
                 else
                 {
-                    if(errorMessage_name.length == 0 && errorMessage_email.length == 0 )
+                    if(errorMessage_name.length == 0 && errorMessage_email.length == 0 && errorMessage_password.length == 0 && errorMessage_2ndpassword.length == 0)
                     {
                         bcrypt.genSalt(saltRounds, function(err, salt) {
                             bcrypt.hash(req.body.passWord, salt, function(err, hash) {
@@ -129,13 +129,16 @@ function password_Validate(str) {
                                             };
                                         sgMail.send(msg)
                                           .then(()=>{
-                                            res.render('home',{
-                                              title:"Home",
-                                              category_list: productModel.getCategory_list(),
-                                              best_Sells: productModel.getBestseller_list(),
-                                              welcome_message: ms
-                                          });
-                                          })
+                                            req.session.user = newUser;
+                                            if (req.session.user.u_isClerk) {
+                                                res.render('home',{
+                                                    title:"Home",
+                                                    category_list: productModel.getCategory_list(),
+                                                    best_Sells: productModel.getBestseller_list(),
+                                                });
+                                            }
+                                            else res.redirect("/");                                               
+                                            })
                                           .catch(err=>{
                                               console.log(`Error ${err}`);
                                           });
@@ -155,7 +158,8 @@ function password_Validate(str) {
                             e1_Password: errorMessage_2ndpassword,
                             e_Phone: errorMessage_phone,
                             yourname: req.body.yourname,
-                            ap_email: req.body.ap_email
+                            ap_email: req.body.ap_email,
+                            user_phone: req.body.user_phone
                         });
                     }
                 }

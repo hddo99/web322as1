@@ -2,7 +2,8 @@ const express = require("express");
 const exphbs= require("express-handlebars");
 const app = express(); 
 const mongoose = require('mongoose');
-// const session = require('express-session');
+const session = require('express-session');
+
 
 
 // load the env variable file
@@ -22,10 +23,31 @@ const generalController= require("./controllers/general");
 const productController= require("./controllers/product");
 const signupController = require("./controllers/signup");
 const signinController = require("./controllers/signin");
+
+
+
+// custom middleware function
+app.use(session({
+    secret: `session_user`,
+    resave: false,
+    saveUninitialized: true
+}))
+app.use((req, res, next) => {
+
+    //res.locals.user is a global handlebars variable. This means that ever single handlebars file can access 
+    //that user variable
+    res.locals.user = req.session.user;
+    next();
+});
+
 app.use("/",generalController); 
-app.use("/",productController);
-app.use("/", signupController);
-app.use("/", signinController);
+app.use("/login", signinController);
+app.use("/cus_regis", signupController);
+app.use("/product",productController);
+app.use("/", (req, res) => {
+    res.render("error");
+});
+
 
 
 
@@ -35,7 +57,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {useNewUrlParser: true, 
 })
 .catch(err=>console.log(`Error occured when connecting to the database ${err}`));
 
-const PORT= process.env.PORT || 3000;
+const PORT= process.env.PORT;
 //This creates an Express Web Server that listens to HTTP Reuqest on port 3000
 app.listen(PORT,()=>{
     console.log(`WeB Assignment  - Web Server Running`);
