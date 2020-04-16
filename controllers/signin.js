@@ -18,7 +18,7 @@ router.get("/",(req,res)=>{
             res.redirect("/login/clerk");
         } else {
             //user
-            res.redirect("/login/cart");
+            res.redirect("/login/dashboard");
         }
     } else {
         res.render("login", {
@@ -49,7 +49,7 @@ router.post("/",(req,res)=>{
                     if(result)
                     {
                         req.session.user = database_user;
-                        res.redirect("/");
+                        res.redirect("/login/");
                     }   
                     else
                     {
@@ -100,30 +100,52 @@ router.get("/logout", (req, res) => {
 
 router.get("/dashboard", (req,res)=>{
     if (req.session.user) {
-        if (req.session.user.u_isClerk) {
-            //render clerk page
-            res.render("clerk", {
-                name: "Clerk " +  req.session.user.u_name,
-                email: req.session.user.u_email
-            });
-        } else {
-            //get cart
-            var temp_cart = [];
-            var total = 0;
-            // signupModel.findById(req.session.user._id).then((user) => {
-            //     user.cart.forEach(element => {
-            //         total += 1;
-            //         temp_cart.push(element);
-            //         console.log(`element: ${element}`);
-            //     });
-                res.render("dashboard", {
-                    name: req.session.user.u_name,
-                    // product_list: temp_cart
+        //user only
+        if (!req.session.user.u_isClerk) {
+            //render user
+            //get cart from server
+            //concept: extend the tempcart from {_id,quantity} -> {_id,quantity,name,price} to show in user's cart
+            signupModel.findOne({ _id: req.session.user._id }).then((user) => {
+                var temp_cart = [];
+                var total_bill = 0;
+                var total_products = 0;
+                //sumuser
+                user.u_cart.forEach(element => {
+                    temp_cart.push(element);
                 });
-        }
+                //get all item
+                productModel.find().then((list_product) => {
+                    temp_cart.forEach(element => {
+                        list_product.forEach(element_product => {
+                            if (element._id == element_product._id) {
+                                //match, then add more product information to temp_cart
+                                element.p_name = element_product.p_name;
+                                element.p_price = element_product.p_price;
+                                element.p_Pic = element_product.p_Pic;
+                            }
+                        });
+                        total_bill += (element.p_price * element.p_quantity) + (element.p_price * element.p_quantity)*0.13;
+                        total_products += 1;
+                    });
+                    //render tempcart
+                    res.render("dashboard", {
+                        name: req.session.user.name,
+                        product_list: temp_cart.reverse(), //newest to oldest
+                        totalproduct: total_products,
+                        totalbill: total_bill
+                    });
+                });
+            });
+
         } else {
-        //not login
-        res.redirect("/login");
+            //clerk
+            res.redirect("/login/clerk");
+        }
+    } else {
+        //not login -> login
+        res.render("login", {
+            title: "Login"
+        });
     }
 })
 
@@ -199,6 +221,10 @@ router.post("/addproduct", (req, res) => {
     }
 
 });
+router.get("/clerk", (req, res) => {
+    res.render("clerk", {
 
+    })
+});
 
 module.exports=router;

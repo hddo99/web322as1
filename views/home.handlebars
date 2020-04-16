@@ -31,15 +31,22 @@ function closeNav() {
 	<h3 class= "banner-title-product category-banner">Product Category</h3>
 </div>
 <div class="category_container">
-	{{#each category_list}}
 		<div class="box">
-            <h4 class="productTitle">{{this.title}}</h4>
-			<a href="{{this.url}}"><img src="{{this.img_src}}"></a>
-			<a href="{{this.url}}">
-                <p>{{this.details}}</p>
-            </a>		
+            <h4 class="productTitle">Valentine's Day</h4>
+			<a href="/product/search/valentine"><img src="img/val.jpg"></a>		
 		</div>	
-	{{/each}} 
+		<div class="box">
+            <h4 class="productTitle">Tools</h4>
+			<a href="/product/search/tools"><img src="img/tool.jpg"></a>		
+		</div>
+		<div class="box">
+            <h4 class="productTitle">Nutritional Products</h4>
+			<a href="/product/search/nutri"><img src="img/fit.jpg"></a>		
+		</div>
+		<div class="box">
+            <h4 class="productTitle">Cell Phones</h4>
+			<a href="/product/search/phones"><img src="img/phone.jpg"></a>	
+		</div>
 </div>
 
 <div class="banner-wrapper banner-wrapper-product">
@@ -50,7 +57,9 @@ function closeNav() {
 	{{#each best_Sells}}
     <div class="box">
 		<div class="img_demo">
- 			<a href="#"><img class="demo cursor" src="{{this.img}}" style="width:100%" onclick="currentSlide({{@index}})">{{this.title}}</a>
+ 			<a href="/product/{{this._id}}"> 
+			<img class="demo cursor" src="/img/{{this.p_Pic}}" style="width:100%" onclick="currentSlide({{@index}})">{{this.p_name}}
+			</a>
 		</div>
     </div>
 	

@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 
 
-
 // load the env variable file
 require('dotenv').config({path:"./config/keys.env"}); 
 //This tells express to set up our template engine has handlebars

@@ -24,12 +24,14 @@
       <div class="product-grid-wrapper">
         {{#each products}}
         <div class="grid-item-box">  
-            <a href="/"><img src="{{this.img}}" class="img_item"> </a>  
+            <a href="/product/{{this._id}}"> 
             <div class="product_content">
-                <h4 class="title_item">{{this.title}}</h4>
-                <p class="price_item">{{this.price}}</p>
-                <p class="description_item">{{this.description}}</p>
+                <img src="/img/{{this.p_Pic}}" class="img_item">  
+                <h4 class="title_item">{{this.p_name}}</h4>
+                <p class="price_item">{{this.p_price}}$</p>
+                <p class="description_item">{{this.p_desc}}</p>
             </div>
+            </a>
         </div>
         {{/each}}
       </div>

@@ -8,9 +8,17 @@ const saltRounds = 12;
 
 // signup route 
 router.get("/",(req,res)=>{
-    res.render("cus_regis",{
-        title:"Registration",
-    });
+    if(req.session.user)
+    {
+        res.redirect("/login/");
+    }
+    else
+    {
+        res.render("cus_regis",{
+            title:"Registration",
+        });
+    }
+    
 });
 
 // validation form

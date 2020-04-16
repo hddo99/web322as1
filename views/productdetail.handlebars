@@ -1,0 +1,35 @@
+ <div class="product_image_area">
+    <div class="container">
+      <div class="row justify-content-center">
+        
+        <div class="col-lg-8">
+          <div class="single_product_text text-center">
+            <h3>{{product_name}}</h3>
+              <img src="/img/{{product_picture}}" alt="#" class="img-fluid">
+            <p>{{product_description}}
+            </p>
+            <div class="card_area">
+                <div class="product_count_area">
+
+                    <p>Price: ${{product_price}}</p>
+                </div>
+              <div class="add_to_cart" style="text-align: center;">
+                    <!--submit quantity and id to the next step-->
+                    <form class="row contact_form" action="/product/addcart/{{_id}}" method="post" style="display: inline-block;">
+                          <div class="product_count d-inline-block">
+                            <label for="product_quantity" style="margin:15px">Quantity:</label>
+
+                              <input class="product_count_item input-number" type="number" name=product_quantity value="1" min="1" max="{{product_quantity}}">
+                          </div>
+                        <button type="submit" value="submit" class="btn_3">
+                          add to cart
+                        </button>
+                    </form>
+    
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
