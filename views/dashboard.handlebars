@@ -1,6 +1,6 @@
 <div class="breadcrumb_iner">
-    <h3 style="color: rgb(201, 156, 99);">Hello {{name}}</h3>
-    <a href="/login/logout" class="btn_3" style="background-color:white;">Logout</a>
+    <h3 style="color: rgb(201, 156, 99);">Welcome back{{name}}</h3>
+    <a href="/login/logout" class="btn_3" style="background-color:white;">Sign out</a>
 </div>
 
   <!--================Cart Area =================-->
@@ -42,7 +42,7 @@
                 </td>
 
                 <td>
-                  <form class="row contact_form" action="/login/userdelete/{{_id}}" method="post" style="display: inline-block;">
+                  <form class="row contact_form" action="/product/deleteProduct/{{_id}}" method="post" style="display: inline-block;">
                         <button type="submit" value="submit" class="btn_3" style="color: red;">
                           delete
                         </button>
@@ -84,7 +84,7 @@
           </table>
           <div class="checkout_btn_inner float-right">
             <a class="btn_1" href="/product">Continue Shopping</a>
-            <a class="btn_1 checkout_btn_1" href="/login/checkout">Proceed to checkout</a>
+            <a class="btn_1 checkout_btn_1" href="/product/checkout">Proceed to checkout</a>
           </div>
         </div>
       </div>

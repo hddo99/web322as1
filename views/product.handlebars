@@ -1,24 +1,20 @@
 <h2 class= "banner_title" id = "bestSelling" style="color: cadetblue;">Shop by Category</h2>
     <div class="detail_product">
       <div class ="product_category">
-        <h3>ELECTRONICS</h3>
-        <ul>
-          <li class="sub_category"><a href="#">Accessories & Supplies</a></li>
-          <li class="sub_category"><a href="#">Camera, Photo & Video</a></li>
-          <li class="sub_category"><a href="#">Car & Vehicle Electronics</a></li>
-          <li class="sub_category"><a href="#">Cell Phones & Accessories</a></li>
-          <li class="sub_category"><a href="#">Computers & Accessories</a></li>
-          <li class="sub_category"><a href="#">eBook Readers & Accessories</a></li>
-          <li class="sub_category"><a href="#">GPS & Navigation</a></li>
-          <li class="sub_category"><a href="#">Headphones</a></li>
-          <li class="sub_category"><a href="#">Home Audio</a></li>
-          <li class="sub_category"><a href="#">Portable Audio & Video</a></li>
-          <li class="sub_category"><a href="#">Radio Communication</a></li>
-          <li class="sub_category"><a href="#">Security & Surveillance</a></li>
-          <li class="sub_category"><a href="#">Telephones & Accessories</a></li>
-          <li class="sub_category"><a href="#">Televisions & Video</a></li>
-          <li class="sub_category"><a href="#">Wearable Technology</a></li>
-        </ul>
+        <h3>{{heading}}</h3>
+        <form  method="post" action="/product/searchbyCategory" style="padding:0;border-style:none">
+          <select id="selectCat" name="findByCategory">
+            {{#if keyword}}
+            <option value="{{defaultCat}}" selected>{{defaultCat}}</option>
+            {{/if}}
+            <option value="phones">Cell phones</option>
+            <option value="Book">Book</option>
+            <option value="Decoration">Decoration</option>
+            <option value="Toy">Toy</option>
+          </select>
+          <input type="submit" value="Find" style="width:auto;padding-left:2px">
+        </form>
+        
       </div>
       
       <div class="product-grid-wrapper">

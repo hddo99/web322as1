@@ -54,7 +54,6 @@ router.post("/",(req,res)=>{
                     else
                     {
                         errorMessage_pw.push('You entered incorrect password');
-                        console.log("no");
                         res.render("login",{
                             title: "Incorrect password",
                             ap_email:  req.body.ap_email,
@@ -86,7 +85,7 @@ router.post("/",(req,res)=>{
         });
     }
   });
-    
+    //khoan
 
     //logout
 router.get("/logout", (req, res) => {
@@ -102,9 +101,7 @@ router.get("/dashboard", (req,res)=>{
     if (req.session.user) {
         //user only
         if (!req.session.user.u_isClerk) {
-            //render user
             //get cart from server
-            //concept: extend the tempcart from {_id,quantity} -> {_id,quantity,name,price} to show in user's cart
             signupModel.findOne({ _id: req.session.user._id }).then((user) => {
                 var temp_cart = [];
                 var total_bill = 0;
@@ -129,7 +126,7 @@ router.get("/dashboard", (req,res)=>{
                     });
                     //render tempcart
                     res.render("dashboard", {
-                        name: req.session.user.name,
+                        name: req.session.user.u_name,
                         product_list: temp_cart.reverse(), //newest to oldest
                         totalproduct: total_products,
                         totalbill: total_bill
@@ -222,9 +219,151 @@ router.post("/addproduct", (req, res) => {
 
 });
 router.get("/clerk", (req, res) => {
-    res.render("clerk", {
+    if (req.session.user) {
+        if (req.session.user.u_isClerk) {
+            //render clerk page
+            //get data from server
+            productModel.find({ p_whoCreated: req.session.user._id }).then((items) => {
+                //result = list of items
+                const temp_products = [];
+                let total_products = 0;
+                items.forEach(element => {
+                    temp_products.push(element);
+                    total_products += 1;
+                });
+                res.render("clerk", {
+                    name: req.session.user.u_name,
+                    email: req.session.user.u_email,
+                    totalproduct: total_products,
+                    product_list: temp_products.reverse(), //new things first
+                });
+            });
 
-    })
+        } else {
+            //user
+            res.render("dashboard", {
+                name: req.session.user.u_name,
+                email: req.session.user.u_mail
+            });
+        }
+    } else {
+        //not login -> login
+        res.render("login", {
+            title: "Login"
+        });
+    }
+});
+
+router.post("/clerkedit/:id", (req, res) => {
+    const err =[];
+    //get full infor 
+    if (req.session.user) {
+        if (!req.files && req.session.user.u_isClerk) {
+            //get the current picture (because we only pass _id, not picture)
+            productModel.findById(req.params.id).then((item) => {
+                //update
+                const item_update = {
+                    p_name: req.body.product_name,
+                    p_price: req.body.product_price,
+                    p_desc: req.body.product_description,
+                    p_quantity: req.body.product_quantity,
+                    p_Pic: req.product_picture,
+                    p_category: req.body.category,
+                    p_isBest: req.body.isBest,
+                    p_whoCreated: req.session.user._id
+                }
+                productModel.updateOne({ _id: req.params.id }, item_update).then((item_changed) => {
+                    res.redirect("/login");
+                });
+            });
+
+        } else {
+            if (req.session.user.u_isClerk) {
+                //check image uploaded or not
+                if (!req.files.product_picture || !(path.parse(req.files.product_picture.name).ext === ".png" || path.parse(req.files.product_picture.name).ext === ".jpg" || path.parse(req.files.product_picture.name).ext === ".JPG" || path.parse(req.files.product_picture.name).ext === ".tiff" || path.parse(req.files.product_picture.name).ext === ".gif")) {
+                    //wrong type, file not exist
+                    err.push(`Unsupported file or file does not exist`);
+                    res.render("product-add", {
+                        error: err
+                    });
+                } else {
+                    //set up image
+                    const p_image = `${req.files.product_picture.name}${req.session.user._id}${path.parse(req.files.product_picture.name).ext}`;
+                    req.files.product_picture.mv(`public/img/${p_image}`);
+                    //no error, addto database
+                    if (!req.body.isBest) {
+                        req.body.isBest = "false";
+                    }
+                    const item_update = {
+                        p_name: req.body.product_name,
+                        p_price: req.body.product_price,
+                        p_desc: req.body.product_description,
+                        p_quantity: req.body.product_quantity,
+                        p_Pic: p_image,
+                        p_category: req.body.category,
+                        p_isBest: req.body.isBest,
+                    }
+                    productModel.updateOne({ _id: req.params.id }, item_update).then((item_changed) => {
+                        res.redirect("/login");
+                    });
+                }
+
+            } else {
+                //user
+                console.log(`User cannot sell item`);
+                res.redirect("/login");
+            }
+        }
+
+    } else {
+        //not login
+        res.redirect("/login");
+    }
+});
+
+router.post("/clerkrequest/:id", (req, res) => {
+    if (req.session.user) {
+        if (req.session.user.u_isClerk) {
+            //get infor
+            productModel.findById(req.params.id).then((product) => {
+                res.render("clerkedit", {
+                    _id: product._id,
+                    product_name: product.p_name,
+                    product_price: product.p_price,
+                    product_description: product.p_desc,
+                    product_quantity: product.p_quantity,
+                    p_Pic: product.p_Pic
+                });
+            });
+
+        } else {
+            //user
+            res.render("dashboard", {
+                name: req.session.user.u_name,
+                email: req.session.user.u_email
+            });
+        }
+    } else {
+        //not login -> login
+        res.render("login", {
+            title: "Login"
+        });
+    }
+});
+//clerk - delete
+router.post("/clerkdelete/:id", (req, res) => {
+    if (req.session.user)
+    {
+        if (req.session.user.u_isClerk) {
+            productModel.deleteOne({ _id: req.params.id }).then(() => {
+             res.redirect("/login");
+            });
+        }
+        else
+            res.redirect("/login");
+    }
+    else
+    res.redirect("/login");
 });
 
 module.exports=router;

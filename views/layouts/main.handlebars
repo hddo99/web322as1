@@ -46,7 +46,7 @@
                                 <li> <a href="/"><span>Order&amp;Delivery</span></a>
                                 </li>
                                 <li>
-                                    <a href="/product">
+                                    <a href="/login">
                                         <i class="fa fa-shopping-cart" style="font-size:36px;color:rgb(207, 223, 221)"></i>
                                     </a>
                                 </li>
@@ -57,8 +57,8 @@
                     
                     <div class="search-nav-wrapper">
                         <hr noshade>
-                            <form action="/action_page.php">
-                                <input type="text"  placeholder="Search for items..." name="search">
+                            <form action="/product/searchKeyword" method="POST">
+                                <input type="text"  placeholder="Search for items..." name="product_name" >
                                 <button type="submit"><i class="fa fa-search" style="color:black"></i></button>
                             </form>
                              <hr noshade>
@@ -114,8 +114,8 @@
                                 </li>
                                 <li class="navigationBar_Element">
                                     <div class="daily-deals">
-                                        <a href="#" > 
-                                            <h2><i class="fa fa-gift" style="font-size:24px"></i>                               Today's Deals</h2>
+                                        <a href="/product" > 
+                                            <h2><i class="fa fa-gift" style="font-size:24px"></i>Today's Deals</h2>
                                         </a>
                                    <div>                             
                                 </li>

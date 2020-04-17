@@ -3,7 +3,7 @@ const exphbs= require("express-handlebars");
 const app = express(); 
 const mongoose = require('mongoose');
 const session = require('express-session');
-
+const bodyParser = require('body-parser');
 
 // load the env variable file
 require('dotenv').config({path:"./config/keys.env"}); 
@@ -15,7 +15,6 @@ app.set("view engine", "handlebars");
 app.use(express.static("public"));
 app.use(express.static("model"));
 
-const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 
 const generalController= require("./controllers/general");
