@@ -1,18 +1,19 @@
- <div class="breadcrumb_iner">
-    <h3 style="color: rgb(190, 126, 42);">Hello {{name}}</h3>
-    <h3 style="color: rgb(180, 126, 54), 53);">Your email: {{email}}</h3>
-    <a href="/login/addproduct" class="btn_3" style="background-color:rgb(158, 62, 62);transition: all 9.5s ease;">Sell Product</a>
-    <a href="/login/addproductCate" class="btn_3" style="background-color:rgb(158, 62, 62);transition: all 9.5s ease;">Upload Product Category</a>
-    <a href="/login/logout" class="btn_3" style="background-color:rgb(182, 42, 42);transition: all 9.5s ease;">Sign out</a>
+ <div class="dashboard_area">
+    <h3 style="color:black;">Hello {{name}}</h3>
+    <h3>Email: {{email}}</h3>
+    <div class = "controlsec">
+      <a href="/login/addproduct" class="btn_3" style="color:lavender; transition: all 9.5s ease;">Upload product</a>
+    </div>
+    <div class = "controlsec">
+      <a href="/login/logout" class="btn_3" style="color:lavender; transition: all 9.5s ease;">Sign out</a>
+    </div>
+    
 </div>
 
 
 <!--================Cart Area =================-->
-  <section class="cart_area section_padding">
-    <div class="container">
-      <div class="cart_inner">
-        <div class="table-responsive">
-          <table class="table">
+  
+       <table class="table">
             <thead>
               <tr>
                 <th scope="col">Product</th>
@@ -26,34 +27,31 @@
               <tr>
                 <td>
                   <div class="media">
-                    <div class="d-flex">
-                      <img src="/img/{{this.p_Pic}}" alt="" />
-                    </div>
-                    <div class="media-body">
+                    
+                      <img src="/img/{{this.p_Pic}}" alt="" align="left"/>
+                    
                       <p>{{this.p_name}}</p>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <h5>{{this.p_price}}</h5>
+                  <h5>{{this.p_price}} $CDN</h5>
                 </td>
                 <td>
                   <div class="product_count">
-                    <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                    <input class="input-number" type="text" value="{{this.p_quantity}}" min="0" max="9">
-                    <span class="input-number-increment"> <i class="ti-plus"></i></span>
+                    <input class="input-number" type="text" value="{{this.p_quantity}}">
                   </div>
                 </td>
                 <td>
                   <form class="row contact_form" action="/login/clerkrequest/{{_id}}" method="post" style="display: inline-block;">
-                          <button type="submit" value="submit" class="btn_3">
+                          <button type="submit" value="submit" class="controlsec">
                           edit
                         </button>
                     </form>
                 </td>
                 <td>
                   <form class="row contact_form" action="/login/clerkdelete/{{_id}}" method="post" style="display: inline-block;">
-                        <button type="submit" value="submit" class="btn_3" style="color: red;">
+                        <button type="submit" value="submit" class="controlsec">
                           delete
                         </button>
                     </form>
@@ -62,7 +60,6 @@
               </tr>
              {{/each}}
             </tbody>
-          </table>
-        </div>
-      </div>
-  </section>
+        </table>
+  
+         

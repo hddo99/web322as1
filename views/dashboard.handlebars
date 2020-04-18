@@ -1,12 +1,13 @@
-<div class="breadcrumb_iner">
-    <h3 style="color: rgb(201, 156, 99);">Welcome back{{name}}</h3>
-    <a href="/login/logout" class="btn_3" style="background-color:white;">Sign out</a>
+<div class="dashboard_area">
+    <h3 style="color:black;">Welcome back {{name}}</h3>
+    <div class = "controlsec">
+      <a href="/login/logout" class="btn_3" style="color:lavender; transition: all 9.5s ease;">Sign out</a>
+    </div>
 </div>
 
   <!--================Cart Area =================-->
-<section class="cart_area section_padding">
-    <div class="container">
-      <div class="cart_inner">
+
+   
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -22,12 +23,8 @@
               <tr>
                 <td>
                   <div class="media">
-                    <div class="d-flex">
                       <img src="/img/{{this.p_Pic}}" alt="" />
-                    </div>
-                    <div class="media-body">
                       <p>{{this.p_name}}</p>
-                    </div>
                   </div>
                 </td>
                 <td>
@@ -43,7 +40,7 @@
 
                 <td>
                   <form class="row contact_form" action="/product/deleteProduct/{{_id}}" method="post" style="display: inline-block;">
-                        <button type="submit" value="submit" class="btn_3" style="color: red;">
+                        <button type="submit" value="submit" class="controlsec" style="color: red;">
                           delete
                         </button>
                     </form>
@@ -57,35 +54,18 @@
                 <td></td>
 
                 <td>
-                  <h5>Subtotal</h5>
+                  <h5>Total (Tax included)</h5>
                 </td>
                 <td style="text-align: right;">
                   <h5>${{totalbill}}</h5>
                 </td>
               </tr>
-              <tr class="shipping_area">
-                <td></td>
-                <td></td>
-                <td>
-                  <h5>Shipping</h5>
-                </td>
-                <td>
-                  <div class="shipping_box">
-                    <ul class="list">
-                      <li>
-                        Free Shipping
-                        <input type="radio" checked aria-label="Radio button for following text input">
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
+              
             </tbody>
           </table>
           <div class="checkout_btn_inner float-right">
-            <a class="btn_1" href="/product">Continue Shopping</a>
-            <a class="btn_1 checkout_btn_1" href="/product/checkout">Proceed to checkout</a>
+            <a class="controlsec" href="/product">Shopping</a>
+            <a class="controlsec" href="/product/checkout">Place your order</a>
           </div>
         </div>
-      </div>
-  </section>
+ 

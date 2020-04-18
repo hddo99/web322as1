@@ -3,7 +3,7 @@ const router = express.Router();
 const productModel = require("../model/model_schema/products");
 const signinModel = require("../model/model_schema/users");
  
-
+// product route
 router.get("/",(req,res)=>{
     const products = [];
     productModel.find()
@@ -18,7 +18,7 @@ router.get("/",(req,res)=>{
                         product_picture: element.p_Pic,
                         product_name: element.p_name,
                         product_price: element.p_price,
-                        p_description: element.p_desc,
+                        product_description: element.p_desc,
                         product_quantity: element.p_quantity,
                     });
                 });
@@ -29,23 +29,18 @@ router.get("/",(req,res)=>{
             products: products.reverse()
         });
     });
-});//
+});
 
+//add product to cart
 router.post("/addcart/:id", (req, res) => {
-    console.log(`req.body.param: :${req.params.id}`);
-    console.log(`req.body.new quan:${req.body.product_quantity}`);
-    //add to cart
-    const newitem = {
+    const newProduct = {
         _id: req.params.id,
         p_quantity: req.body.product_quantity
     };
-    //test
-    console.log(`new item id debug :${newitem._id}`);
-    //get cart from user
+    //pull cart from session.user
     if (req.session.user) {
         signinModel.findById(req.session.user._id).then((user) => {
-            //push, update and save
-            user.u_cart.push(newitem);
+            user.u_cart.push(newProduct);
             user.save();
             res.redirect("/login");
         });
@@ -56,19 +51,10 @@ router.post("/addcart/:id", (req, res) => {
 
 //cart - delete
 router.post("/deleteProduct/:id", (req, res) => {
-    console.log(`req.body.param: :${req.params.id}`);
-    console.log(`req.body.new quan:${req.body.product_quantity}`);
-    console.log(`${req.session.user._id}`);
     signinModel.findById(req.session.user._id).then((user) => {
-        console.log(`catched`);
-        console.log(`user.cart.length: ${user.u_cart.length}`);
-        console.log(`req.params.id: ${req.params.id}`);
-
-        for (let index = 0; index < user.u_cart.length; index++) {
-            if (user.u_cart[index]._id == req.params.id) {
-                //detect product in array
-                user.u_cart.splice(index, 1); //delete 1 element start at index
-                console.log(`index: ${index}`);
+        for (let i = 0; i < user.u_cart.length; i++) {
+            if (user.u_cart[i]._id == req.params.id) {
+                user.u_cart.splice(i, 1); //delete 1 product t start at i
                 break;
             }
         }
@@ -77,44 +63,59 @@ router.post("/deleteProduct/:id", (req, res) => {
     });
 });
 
+//cart-checkout
 router.get("/checkout", (req, res) => {
     if (req.session.user) {
-        //user only
-        if (!req.session.user.isClerk) {
-            //render user
-            //get cart from server
-            //concept: extend the tempcart from {_id,quantity} -> {_id,quantity,name,price} to show in user's cart
-
-            //email
-            const sgMail = require('@sendgrid/mail');
-            sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-            const msg = {
-                to: `${req.session.user.u_email}`,
-                from: `amazon.ca@cheap.com`,
-                subject: 'Thank you for shopping with thus',
-                html: `
-                Hi ${req.session.user.u_name},<br><br>
-                <strong>Here is what you have order: </strong>`,
-            };
-            sgMail.send(msg).then(() => {
-                console.log(`successfully email`);
-                //delete user cart
-                signinModel.findById(req.session.user._id).then((user) => {
-                    console.log(`User :${user.u_name} has succesfully paid for his order`);
-
-                    user.u_cart = [];
-                    user.save(); 
-                    res.redirect("/login/");
-
-                });
-            }).catch(err => {
-                console.log(`Error ${err}`);
-            });
-
-        } else {
-            //clerk
-            res.redirect("/login/clerk");
+        // customer
+        if (!req.session.user.u_isClerk) {
+            signinModel.findOne({ _id: req.session.user._id })
+            .then((user) => {
+                const productCart = [];
+                let order_total = 0;
+                let product_amt = 0;
+                req.session.user.u_receipt  = `E-receipt sent to customer ${req.session.user.u_name}:<br>`
+                user.u_cart.forEach(element => {
+                    productCart.push(element);
+                })
+                productModel.find()
+                    .then(listproducts =>{
+                    productCart.forEach(element =>{
+                        listproducts.forEach(product =>{
+                            if(element._id == product._id)
+                                    {
+                                        element.p_name = product.p_name;
+                                        element.p_price = product.p_price;
+                            }   
+                        });
+                        req.session.user.u_receipt += `${element.p_quantity} ${element.p_name}  (${element.p_price}$) <br>`;
+                        product_amt += element.p_quantity*1;  
+                        order_total += (element.p_price * element.p_quantity * 1.13);
+                    })
+                    req.session.user.u_receipt += `You have bought ` + product_amt + `products <br>`;
+                    req.session.user.u_receipt += `Your total is: ` + order_total.toFixed(2) + ` $CAD <br> Thank you for shopping with us. Your order should come to your place in 2-5 business days`;
+                    signinModel.findById(req.session.user._id).then((user) => {
+                        user.u_cart = [];
+                        user.save(); 
+                        const sgMail = require('@sendgrid/mail');
+                        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+                        const msg = {
+                            to: `${req.session.user.u_email}`,
+                            from: `amazon.ca@cheap.com`,
+                            subject: 'Thank you for shopping with thus',
+                            html: req.session.user.u_receipt               
+                        };
+                        sgMail.send(msg)
+                        .then(() => {
+                            res.redirect("/login");
+                        }) 
+                        .catch(err => console.log(`Error ${err}`));
+                    });
+            })
+            
+            })
+            .catch(err => console.log(`Error ${err}`));
         }
+        else  res.redirect("/login");  //clerk
     } else {
         //not login -> login
         res.render("login", {
@@ -133,12 +134,10 @@ router.post("/searchKeyword", (req, res) => {
             $regex : `.*${req.body.product_name}.*`, 
             $options: 'i' 
         } 
-    }; //i: case sensitive
-    console.log(filter);
+    }; 
     productModel.find(filter)
     .then((key_item) => {
         if (key_item == null) {
-            console.log(key_item);
             res.render("product", {
                 title: "Products",
                 products: []
@@ -147,7 +146,6 @@ router.post("/searchKeyword", (req, res) => {
             key_item.forEach(element => {
                 allproducts.push(element);
             });
-            console.log(allproducts);
             res.render("product", {
                 title: "Products",
                 products: allproducts

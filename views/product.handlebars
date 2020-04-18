@@ -4,33 +4,29 @@
         <h3>{{heading}}</h3>
         <form  method="post" action="/product/searchbyCategory" style="padding:0;border-style:none">
           <select id="selectCat" name="findByCategory">
-            {{#if keyword}}
-            <option value="{{defaultCat}}" selected>{{defaultCat}}</option>
-            {{/if}}
             <option value="phones">Cell phones</option>
-            <option value="Book">Book</option>
-            <option value="Decoration">Decoration</option>
-            <option value="Toy">Toy</option>
+            <option value="valentine">Valentine Presents</option>
+            <option value="nutrition">Nutritional Product</option>
+            <option value="tools">Tools</option>
           </select>
-          <input type="submit" value="Find" style="width:auto;padding-left:2px">
+          <input type="submit" value="Find" style="width:auto;padding:3px">
         </form>
-        
       </div>
       
-      <div class="product-grid-wrapper">
+     
         {{#each products}}
         <div class="grid-item-box">  
             <a href="/product/{{this._id}}"> 
             <div class="product_content">
                 <img src="/img/{{this.p_Pic}}" class="img_item">  
-                <h4 class="title_item">{{this.p_name}}</h4>
-                <p class="price_item">{{this.p_price}}$</p>
-                <p class="description_item">{{this.p_desc}}</p>
+                <p><span class="bold">Name: </span>{{this.p_name}}</p>
+                <p><span class="bold">Price: </span>{{this.p_price}}$</p>
+                <p class="description_item"><span class="bold">Detail: </span>{{this.p_desc}}</p>
             </div>
             </a>
         </div>
         {{/each}}
-      </div>
+     
     </div>
   
 

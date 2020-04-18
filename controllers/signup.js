@@ -86,13 +86,6 @@ function password_Validate(str) {
     else
     {
         const {yourname, ap_email, user_phone} = req.body;
-        const ms = 
-        `
-        <div id="myNav" class="overlay" onclick="closeNav()">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <span>Hi ${yourname}. Welcome to Amazon</span>
-        </div>`;
-
         signupModel.findOne({ "u_email": req.body.ap_email })
         .then(database_email =>
             {

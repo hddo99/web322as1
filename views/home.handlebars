@@ -31,22 +31,12 @@ function closeNav() {
 	<h3 class= "banner-title-product category-banner">Product Category</h3>
 </div>
 <div class="category_container">
-		<div class="box">
-            <h4 class="productTitle">Valentine's Day</h4>
-			<a href="/product/search/valentine"><img src="img/val.jpg"></a>		
-		</div>	
-		<div class="box">
-            <h4 class="productTitle">Tools</h4>
-			<a href="/product/search/tools"><img src="img/tool.jpg"></a>		
-		</div>
-		<div class="box">
-            <h4 class="productTitle">Nutritional Products</h4>
-			<a href="/product/search/nutri"><img src="img/fit.jpg"></a>		
-		</div>
-		<div class="box">
-            <h4 class="productTitle">Cell Phones</h4>
-			<a href="/product/search/phones"><img src="img/phone.jpg"></a>	
-		</div>
+		{{#each category_list}}		
+			<div class="box">
+           	 	<h4 class="productTitle">{{this.c_name}}</h4>
+				<a href="/product"><img src="img/{{this.c_Pic}}"></a>		
+			</div>		
+	{{/each}} 
 </div>
 
 <div class="banner-wrapper banner-wrapper-product">

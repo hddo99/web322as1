@@ -1,59 +1,62 @@
-<div class="col-lg-6 col-md-6">
-                    <div class="login_part_form">
-                        <div class="login_part_form_iner">
+
+                    <div class="form_container form_addPform">
+                        <div class="sign-box box_addPform">
                             <h3>Add Product<br>
                                 </h3>
 
 
                             <form class="row contact_form" action="/login/addproduct" method="post" enctype="multipart/form-data">
                                 
-                                <div class="col-md-12 form-group p_star">
+                                <div class="element_form_addp">
                                     <input type="text" class="form-control" id="name" name="product_name"
                                       required  placeholder="Enter product name">
                                 </div>
 
-                                <div class="col-md-12 form-group p_star">
+                                <div class="element_form_addp">
                                     <input type="number" class="form-control" id="name" name="product_price"
-                                      required  placeholder="Enter product price">
+                                      placeholder="Enter product price">
                                 </div>
 
-                                <div class="col-md-12 form-group p_star">
+                                <div class="element_form_addp">
                                     <input type="number" class="form-control" id="name" name="product_quantity"
-                                       required placeholder="Enter product quantity">
+                                       placeholder="Enter product quantity">
                                 </div>
 
-                                <div class="col-md-12 form-group p_star">
+                                <div class="element_form_addp">
                                     <textarea rows="5" cols="40" type="text" class="form-control" id="name" name="product_description"
-                                      required  placeholder="Enter product description"></textarea>
+                                      placeholder="Enter product description"></textarea>
                                 </div>
 
-                                <div class="col-md-12 form-group p_star">
+                                <div class="element_form_addp">
                                     <p>Upload picture:</p>
                                     <input type = "file" name="product_picture">
                                     
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="category" id="category0" value="phones" checked>
-                                    <label class="form-check-label" for="category0">
-                                        Cell phones 
-                                    </label>
+                                    <div class="form_check" style="white-space:nowrap;">
+                                        <input class="form-check-input" type="radio" name="category" id="category0" value="valentine" class="radio" checked>
+                                        <label class="form-check-label" for="category0">Valentine
+                                        </label>  
+                                        
                                     </div>
 
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="category" id="category1" value="accessories">
-                                    <label class="form-check-label" for="category1">
-                                        Accessories
-                                    </label>
-                                    </div>
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="category" id="category2" value="tools">
-                                    <label class="form-check-label" for="category2">
+                                    <div class="form_check" style="white-space:nowrap;">
+                                        <label class="form-check-label" for="category1">
+                                    <input class="form-check-input" type="radio" name="category" id="category1" value="tools">
+                                    
                                         Tools
                                     </label>
                                     </div>
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="category" id="category3" value="nutrition">
-                                    <label class="form-check-label" for="category3">
-                                       Nutritional Products
+                                    <div class="form_check" style="white-space:nowrap;">
+                                        <label class="form-check-label" for="category2">
+                                    <input class="form-check-input" type="radio" name="category" id="category2" value="nutrition">
+                                    
+                                        Nutrition
+                                    </label>
+                                    </div>
+                                    <div class="form_check" style="white-space:nowrap;">
+                                        <label class="form-check-label" for="category3">
+                                    <input class="form-check-input" type="radio" name="category" id="category3" value="phones">
+                                    
+                                        Cell Phones
                                     </label>
                                     
                                     <h2>{{error}}</h2>
@@ -63,7 +66,7 @@
 
                                
                                     
-                                <div class="col-md-12 form-group p_star">
+                                <div class="element_form_addp">
 
                                     <input type="checkbox" class="form-control" id="best" name="isBest"
                                         style="height: 15px;width: 15px;" value="true">
@@ -71,15 +74,13 @@
                                 </div>
                                 
                                 <div class="col-md-12 form-group">
-                                    
-
-                                
-
-                                    <button type="submit" value="submit" class="btn_3">
-                                        add product
+                                    <button type="submit" value="submit" class="controlsec">
+                                        Add product
                                     </button>
+                                    <button type="submit" formaction="/login/addproductCategory" class="controlsec">Add product category
                                 </div>
+                                <h2>{{errorImage}}</h2>
                             </form>
                         </div>
                     </div>
-                </div>
+             

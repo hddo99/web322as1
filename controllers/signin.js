@@ -3,6 +3,7 @@ const router = express.Router();
 // const productModel = require("../model/product");
 const signupModel = require("../model/model_schema/users");
 const productModel = require("../model/model_schema/products");
+const productCategoryModel = require("../model/model_schema/proCategory");
 const bcrypt = require('bcryptjs');
 const fileUpload = require('express-fileupload'); //import file upload
 router.use(fileUpload({
@@ -129,7 +130,7 @@ router.get("/dashboard", (req,res)=>{
                         name: req.session.user.u_name,
                         product_list: temp_cart.reverse(), //newest to oldest
                         totalproduct: total_products,
-                        totalbill: total_bill
+                        totalbill: total_bill.toFixed(2)
                     });
                 });
             });
@@ -163,21 +164,23 @@ router.get("/addproduct", (req, res) => {
         res.redirect("/login");
     }
 })
-
 //add product to database
 router.post("/addproduct", (req, res) => {
     const err = [];
     if (req.session.user) {
-        if (!req.files) {
-            res.redirect("product-add");
-        } else {
-            if (req.session.user.u_isClerk) {
-                //check image uploaded or not
-                if (!req.files.product_picture || !(path.parse(req.files.product_picture.name).ext === ".png" || path.parse(req.files.product_picture.name).ext === ".jpg" || path.parse(req.files.product_picture.name).ext === ".JPG" || path.parse(req.files.product_picture.name).ext === ".tiff" || path.parse(req.files.product_picture.name).ext === ".gif")) {
+        if(!req.session.user.u_isClerk) res.redirect("/login");
+        else
+        {
+            if (!req.files) {
+                res.render("clerkedit");
+            }
+            else
+            {
+                if (!req.files.product_picture || !(path.parse(req.files.product_picture.name).ext === ".png" || path.parse(req.files.product_picture.name).ext === ".jpg" || path.parse(req.files.product_picture.name).ext === ".JPG" || path.parse(req.files.product_picture.name).ext === ".gif")) {
                     //wrong type, file not exist
                     err.push(`Unsupported file or file does not exist`);
                     res.render("product_add", {
-                        error: err
+                        errorImage: err
                     });
                 } else {
                     //set up image
@@ -197,27 +200,64 @@ router.post("/addproduct", (req, res) => {
                         p_isBest: req.body.isBest,
                         p_whoCreated: req.session.user._id
                     }
-                    const newItem = new productModel(newProduct);
-                    newItem.save();
+                    const nproduct = new productModel(newProduct);
+                    nproduct.save();
 
-                    //success, render login
+                    //Product added, render dashboard
                     res.redirect("/login");
-                    console.log(`Product added`);
                 }
-
-            } else {
-                //user
-                console.log(`User cannot add item`);
-                res.redirect("/login");
             }
-        }
-
+        }   
     } else {
         //not login
         res.redirect("/login");
     }
-
 });
+
+//addproductCategory
+router.post("/addproductCategory", (req, res) => {
+    const err = [];
+    if (req.session.user) {
+        if(!req.session.user.u_isClerk) res.redirect("/login");
+        else
+        {
+            if (!req.files) {
+                res.render("clerkedit");
+            }
+            else
+            {
+                if (!req.files.product_picture || !(path.parse(req.files.product_picture.name).ext === ".png" || path.parse(req.files.product_picture.name).ext === ".jpg" || path.parse(req.files.product_picture.name).ext === ".JPG" || path.parse(req.files.product_picture.name).ext === ".gif")) {
+                    //wrong type, file not exist
+                    err.push(`Unsupported file or file does not exist`);
+                    res.render("product_add", {
+                        errorImage: err
+                    });
+                } else {
+                    //set up image
+                    const p_image = `${req.files.product_picture.name}${req.session.user._id}${path.parse(req.files.product_picture.name).ext}`;
+                    req.files.product_picture.mv(`public/img/${p_image}`);
+                    //no error, add product to database
+                    const newProductCate = {
+                        c_name: req.body.product_name,
+                        c_Pic: p_image,
+                        c_category: req.body.category,
+                        c_whoCreated: req.session.user._id
+                    }
+                    const nproductCate = new productCategoryModel(newProductCate);
+                    nproductCate.save();
+
+                    //Product added, render dashboard
+                    res.redirect("/login");
+                }
+            }
+        }   
+    } else {
+        //not login
+        res.redirect("/login");
+    }
+});
+
+
 router.get("/clerk", (req, res) => {
     if (req.session.user) {
         if (req.session.user.u_isClerk) {
@@ -259,7 +299,6 @@ router.post("/clerkedit/:id", (req, res) => {
     //get full infor 
     if (req.session.user) {
         if (!req.files && req.session.user.u_isClerk) {
-            //get the current picture (because we only pass _id, not picture)
             productModel.findById(req.params.id).then((item) => {
                 //update
                 const item_update = {
@@ -267,24 +306,24 @@ router.post("/clerkedit/:id", (req, res) => {
                     p_price: req.body.product_price,
                     p_desc: req.body.product_description,
                     p_quantity: req.body.product_quantity,
-                    p_Pic: req.product_picture,
+                    p_Pic: item.p_Pic,
                     p_category: req.body.category,
                     p_isBest: req.body.isBest,
                     p_whoCreated: req.session.user._id
                 }
-                productModel.updateOne({ _id: req.params.id }, item_update).then((item_changed) => {
+                productModel.updateOne({ _id: req.params.id }, item_update).then(() => {
                     res.redirect("/login");
                 });
             });
-
-        } else {
+        } 
+        else {
             if (req.session.user.u_isClerk) {
                 //check image uploaded or not
-                if (!req.files.product_picture || !(path.parse(req.files.product_picture.name).ext === ".png" || path.parse(req.files.product_picture.name).ext === ".jpg" || path.parse(req.files.product_picture.name).ext === ".JPG" || path.parse(req.files.product_picture.name).ext === ".tiff" || path.parse(req.files.product_picture.name).ext === ".gif")) {
+                if (!req.files.product_picture || !(path.parse(req.files.product_picture.name).ext === ".png" || path.parse(req.files.product_picture.name).ext === ".jpg" || path.parse(req.files.product_picture.name).ext === ".JPG" ||  path.parse(req.files.product_picture.name).ext === ".gif")) {
                     //wrong type, file not exist
                     err.push(`Unsupported file or file does not exist`);
-                    res.render("product-add", {
-                        error: err
+                    res.render("product_add", {
+                        errorImage: err
                     });
                 } else {
                     //set up image
@@ -303,14 +342,13 @@ router.post("/clerkedit/:id", (req, res) => {
                         p_category: req.body.category,
                         p_isBest: req.body.isBest,
                     }
-                    productModel.updateOne({ _id: req.params.id }, item_update).then((item_changed) => {
+                    productModel.updateOne({ _id: req.params.id }, item_update).then(() => {
                         res.redirect("/login");
                     });
                 }
 
             } else {
                 //user
-                console.log(`User cannot sell item`);
                 res.redirect("/login");
             }
         }
@@ -332,6 +370,7 @@ router.post("/clerkrequest/:id", (req, res) => {
                     product_price: product.p_price,
                     product_description: product.p_desc,
                     product_quantity: product.p_quantity,
+                    isBest: product.p_isBest,
                     p_Pic: product.p_Pic
                 });
             });

@@ -12,9 +12,14 @@ const productCategorySchema = new Schema({
         type:String,
         required:true
     },
-    p_Pic:
+    c_Pic:
     {
         type:String,
+        required:true
+    },
+    c_category:
+    {
+        type:String, 
         required:true
     },
     dateCreated:
